@@ -1,3 +1,7 @@
-install git
-clone repo
+apt-get update
+apt-get upgrade
+apt-get git
+clone this repo
+apt-get docker
+apt-get docker-compose
 
