@@ -1,10 +1,14 @@
-version: "3"
-
-# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+version: '3.8'
 services:
   pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
+    build: ./pihole
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - pihole_external
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -12,17 +16,22 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
     environment:
-      TZ: 'America/Chicago'
-      # WEBPASSWORD: 'set a secure password here or it will be random'
-    # Volumes store your data between container upgrades
-    volumes:
-       - './etc-pihole/:/etc/pihole/'
-       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
+      #VIRTUAL_HOST: pihole.example.com
+      TZ:"America/New_York"
+      WEBPASSWORD: "pi.hole"
+      DNS1: "127.0.0.1#5053"
+      DNS2: "1.0.0.1"
     restart: unless-stopped
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+networks:
+  pihole_external:
+    driver: macvlan  #This is helpful if you have services already bound on those ports, as is common in Synology and other NAS devices.
+    driver_opts:
+      parent: eth0 #Change to your network interface here.
+    ipam:
+      config:
+        - subnet: 192.168.7.0/24
+          gateway: 192.168.7.12
+          ip_range: 192.168.7.44/30
