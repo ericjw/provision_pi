@@ -4,5 +4,7 @@ apt-get git
 clone this repo
 apt-get docker
 apt-get docker-compose
-still working on dockerfiles
+sudo systemctl enable docker
+docker-compose up -d  #is this the best way to do this? look into
+
 
