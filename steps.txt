@@ -4,4 +4,5 @@ apt-get git
 clone this repo
 apt-get docker
 apt-get docker-compose
+still working on dockerfiles
 

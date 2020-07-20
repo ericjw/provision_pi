@@ -1,4 +1,4 @@
-version: '3.8'
+version: '2.4'
 services:
   pihole:
     build: ./pihole
@@ -17,7 +17,7 @@ services:
       - "443:443/tcp"
     environment:
       #VIRTUAL_HOST: pihole.example.com
-      TZ:"America/New_York"
+      TZ: "America/New_York"
       WEBPASSWORD: "pi.hole"
       DNS1: "127.0.0.1#5053"
       DNS2: "1.0.0.1"
@@ -32,6 +32,6 @@ networks:
       parent: eth0 #Change to your network interface here.
     ipam:
       config:
-        - subnet: 192.168.7.0/24
-          gateway: 192.168.7.12
-          ip_range: 192.168.7.44/30
+        - subnet: 192.168.1.0/24
+        - gateway: 192.168.1.1
+        - ip_range: 192.168.1.240/28 #.241-.255
