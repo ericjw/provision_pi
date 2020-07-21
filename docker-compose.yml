@@ -7,16 +7,18 @@ services:
       - NET_ADMIN
     #networks:
     #  - pihole_external
-    #dns:
-    #  - 1.1.1.1
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
+    dns:
+      - 127.0.0.1
+    network_mode: host
+    #ports:
+    #  - "53:53/tcp"
+    #  - "53:53/udp"
+    #  - "67:67/udp"
+    #  - "80:80/tcp"
+    #  - "443:443/tcp"
     environment:
       #VIRTUAL_HOST: pihole.example.com
+      ServerIP: "192.168.1.13"
       TZ: "America/New_York"
       WEBPASSWORD: "pi.hole"
       DNS1: "1.1.1.1"
