@@ -27,6 +27,13 @@ services:
     volumes:
       - './etc-pihole/:/etc/pihole/'
       - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/timezone:/etc/timezone:ro
+    command: --interval 30 --debug
 #networks:
 #  pihole_external:
 #    driver: macvlan  #This is helpful if you have services already bound on those ports, as is common in Synology and other NAS devices.
